@@ -1,5 +1,11 @@
-
+ 
 manage.py runserver 命令的深入与浅出
+
+概述。。。本来只是想给django的开发服务器加一个log功能，结果越写越长。。直接把http响应全看完了。。
+现在可以直接从套接字开始写爬虫了 23333   _(:з」∠)_
+基本上把python网络库搞完了
+
+github地址:https://github.com/chanchancl/Learn-Django/blob/master/django%20runserver.txt
 
 1.manage.py runserver的流程
 
@@ -561,9 +567,15 @@ response7 <HttpResponse status_code=200, "text/html; charset=utf-8">
 [20/Apr/2016 21:01:01] "GET /index/ HTTP/1.1" 200 18  （最后这条是标准输出）
     
 
-感觉还有一些东西没写。。。先这样吧。。   2016.4.20 
+感觉还有一些东西没写。。。先这样吧。。   2016.4.20  
+    
     
 测试环境 :
 Windows 10.0   build 10586 
 CPython 3.5.1
 django  1.9.4
+    
+后记：。。。从没写过这么长的东西，真不容易啊。。。前前后后十几个文件，几千行代码来回看。。。后面写着前面忘着。。还要去复习一下。。。
+ 
+
+    
