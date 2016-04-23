@@ -1,0 +1,26 @@
+html...
+
+大体结构
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta></meta>
+        <style></style>
+        <script></script>
+    </head>
+    <body>
+        <p></p>
+        <a></a>
+        <img></img>
+        <br></br>
+        <ul>
+            <li></li>
+        </ul>
+        <ol>
+            <li></li>
+        </ol>
+        <div></div>
+    </body>
+</html>

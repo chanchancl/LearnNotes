@@ -304,7 +304,7 @@ django中，有一个 middleware 的概念，类似于一个个用于完成特�
 
 这部分分别是:
     
-第1部分，让middleware 的 process_request处理请求，实际上就是让每个加载的middleware class 的 process_request函数处理一下request
+第1部分，让middleware 的 process_request处理请求，实际上就是让每个加载的middleware class 的process_request函数处理一下request
     一旦某个middleware，返回了response，则跳过剩余的middleware (同样跳过其他步骤)
 
 第2部分，对url进行解析，主要根据 settings.ROOT_URLCONF.(使用正则表达式)
@@ -326,6 +326,8 @@ django中，有一个 middleware 的概念，类似于一个个用于完成特�
     若path 与url成功匹配，则遍历 middleware的 process_view 函数...实际上默认的middleware里面只有一个有
     process_view函数  233
     这个view函数。。CSRF   Cross Site Request Forgery。。起一个防护作用。（主要用于COOKIE）（正常来说没啥用）
+    额。。这里纠正一下，CSRF 对表单的 post方法有重要作用。。。
+    详情参照文档:https://docs.djangoproject.com/en/1.9/ref/csrf/
     
     若path 与url不匹配，则resolve 会抛出异常，表示404 page not found
     
