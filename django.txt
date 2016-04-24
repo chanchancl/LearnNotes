@@ -1,0 +1,19 @@
+
+django的URL可以嵌套，
+示例如下
+
+# In settings/urls/main.py
+from django.conf.urls import include, url
+
+urlpatterns = [
+    url(r'^(?P<username>\w+)/blog/', include('foo.urls.blog')),
+]
+
+# In foo/urls/blog.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.blog.index),
+    url(r'^archive/$', views.blog.archive),
+]
