@@ -17,3 +17,7 @@ urlpatterns = [
     url(r'^$', views.blog.index),
     url(r'^archive/$', views.blog.archive),
 ]
+
+url可以被命名，这有什么好处？
+简单的来说，可以让在你模板里出现的URL，不需要被硬编码(hard code)
+这样当你的某个URL需要更改时，就不需要遍历所有的HTML模板然后修改。
