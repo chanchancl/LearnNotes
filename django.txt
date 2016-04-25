@@ -1,4 +1,5 @@
 
+1.URL
 django的URL可以嵌套，
 示例如下
 
@@ -23,3 +24,44 @@ url可以被命名，这有什么好处？
 这样当你的某个URL需要更改时，就不需要遍历所有的HTML模板然后修改。
 
 PS: notepad++自带的编码转换大法好
+
+2.View
+Django的 view 带有修饰器。。可以起到一些辅助作用
+如 
+@require_http_methods([])
+@require_GET()
+@require_POST()
+@require_safe()
+safe是这样定义的:
+Decorator to require that a view only accepts the GET and HEAD methods. These methods are commonly considered “safe” because they should not have the significance of taking an action other than retrieving the requested resource.
+
+3.Form
+
+django中，一个Form想要处理某一个数据项的时候，这个
+<input> 标记，必须要有  name 属性，否则数据并不会被 POST 解析。
+
+一旦你定义了一个Form如
+from django import forms
+
+class UploadFileForm(forms.Form):
+    test = forms.CharField(label='test',max_length=50)
+    
+form = UploadFileForm(request.POST)
+
+这个form实例的 test成员并不可以被直接访问  form.test
+    相反可以通过 别的方式访问
+    form['test']  返回的是这个field完整的html档案 如 
+    <input id="id_test" maxlength="50" name="test" type="text" value="1" />
+    
+    form.cleaned_data['test'] 返回只是 value的值如
+    1
+
+
+form有一个成员变量名叫 data
+我测试的时候，把filed的名字也命名为 data。。。结果测了半天也不知道问题出在哪里。。。23333
+
+总算是了解 表单的使用方法了。。
+
+
+
+
