@@ -1,6 +1,6 @@
 html...
 
-大体结构
+澶т綋缁撴瀯锛堜腑鏂囩紪鐮佽繕鐪熸槸楹荤儲銆傘�傦級
 
 <!DOCTYPE html>
 <html>

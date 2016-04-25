@@ -1,6 +1,6 @@
 
-django��URL����Ƕ�ף�
-ʾ������
+django的URL可以嵌套，
+示例如下
 
 # In settings/urls/main.py
 from django.conf.urls import include, url
@@ -18,6 +18,8 @@ urlpatterns = [
     url(r'^archive/$', views.blog.archive),
 ]
 
-url���Ա�����������ʲô�ô���
-�򵥵���˵������������ģ������ֵ�URL������Ҫ��Ӳ����(hard code)
-���������ĳ��URL��Ҫ����ʱ���Ͳ���Ҫ�������е�HTMLģ��Ȼ���޸ġ�
+url可以被命名，这有什么好处？
+简单的来说，可以让在你模板里出现的URL，不需要被硬编码(hard code)
+这样当你的某个URL需要更改时，就不需要遍历所有的HTML模板然后修改。
+
+PS: notepad++自带的编码转换大法好
