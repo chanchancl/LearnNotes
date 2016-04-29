@@ -63,5 +63,87 @@ form有一个成员变量名叫 data
 总算是了解 表单的使用方法了。。
 
 
+4.Module
+
+Module真麻烦。。。
+
+突然发现了，  signals   简直是神奇啊
+可以像捕获消息一样，捕获有关的各种操作 恩。
+
+去app1里面测试一下
+
+test
+    在admin后台，进入增加某个modle的页面时，就会init一个该modle，即发送pre_init
+    per_init和 post_init 发送的很频繁，当页面view需要查询数据时，都会发送该信号
+    
+    而 per_save 和 post_save 则较少，发现只有当 create 或 modify 一个modle时，才会发送该信号
+    对应的 pre_delete 和 post_delete 也只有当 删除某个modle时，才会被发送。
+    >>> myModel.objects.all()
+    pre_init11111111111
+    post_init2222222222 <class 'learn.models.myModel'> {'instance': <myModel: 1>, 'signal': <django.db.models.signals.ModelSignal object at 0x00000244EFD26080>}
+    pre_init11111111111
+    post_init2222222222 <class 'learn.models.myModel'> {'instance': <myModel: 233>, 'signal': <django.db.models.signals.ModelSignal object at 0x00000244EFD26080>}
+    pre_init11111111111
+    post_init2222222222 <class 'learn.models.myModel'> {'instance': <myModel: 3444>, 'signal': <django.db.models.signals.ModelSignal object at 0x00000244EFD26080>}
+    [<myModel: 1>, <myModel: 233>, <myModel: 3444>]
+    
+    同样的在 $python manage.py shell 中测试，在使用 all() 来获取 QuerySet时，也会发送对应的信号
+    
+    使用 myModel.objects.create() 创建记录，会分别触发 init 和 save 信息
+    
+    使用 myModel.object.filter  获取QuerySet时，只有当匹配到记录时，才会init对应的对象，然后返回列表
+    
+    
+    modify 一条记录时，log信息为
+        pre_save333333333333
+        post_save44444444444 <class 'learn.models.myModel'> 
+        {'signal': <django.db.models.signals.ModelSignal object at 0x000001F5D41E4208>, 'update_fields': None, 
+        'raw': False, 'created': False, 'instance': <myModel: 11111>, 'using': 'default'}
+        
+    create 一条记录时，log信息为
+        pre_save333333333333
+        post_save44444444444 <class 'learn.models.myModel'> 
+        {'signal': <django.db.models.signals.ModelSignal object at 0x000001F5D41E4208>, 'update_fields': None, 
+        'raw': False, 'created': True, 'instance': <myModel: 屈博伟>, 'using': 'default'}
+    
+    啊哈，根据(**kwargs)这里的 created 是否为 True 即可判断这是不是一个 新建动作
+    
+delete 信号没啥特殊的，顾名思义
+
+
+另外，发现 django的 admin后台 非常值得研究，看前端和后端是如何结合  与 分界的。
+
+前端与js的结合
+    lastChecked=null
+    $(actionCheckboxes).click(function(event) {
+            if (!event) { event = window.event; }
+            var target = event.target ? event.target : event.srcElement;
+            if (lastChecked && $.data(lastChecked) !== $.data(target) && event.shiftKey === true) {
+                var inrange = false;
+                $(lastChecked).prop("checked", target.checked)
+                    .parent().parent().toggleClass(options.selectedClass, target.checked);
+                $(actionCheckboxes).each(function() {
+                    if ($.data(this) === $.data(lastChecked) || $.data(this) === $.data(target)) {
+                        inrange = (inrange) ? false : true;
+                    }
+                    if (inrange) {
+                        $(this).prop("checked", target.checked)
+                            .parent().parent().toggleClass(options.selectedClass, target.checked);
+                    }
+                });
+            }
+            $(target).parent().parent().toggleClass(options.selectedClass, target.checked);
+            lastChecked = target;
+            updateCounter();
+        });
+    
+    在该地址下http://127.0.0.1:8000/admin/learn/mymodel/
+    每条记录前面有一个checkout 框，当点击这个框时，会发生一些动作，
+    这些动作的响应，如上面的代码。。。这里还牵扯到 jQuery。。。心好累
+    
+
+
+
+
 
 
