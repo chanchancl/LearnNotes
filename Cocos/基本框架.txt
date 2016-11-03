@@ -1,0 +1,41 @@
+
+
+由 "platform/CCPlatformMacros.h" 和 "base/ccConfig.h" 来决定编译参数和解决跨平台的一些底层差异
+
+cocos2d 有一套引用计数 和 GC来共同管理对象
+
+1..Ref
+
+这里还有一个Cloneable 对象，
+用来显示指明，一个对象是否可以被克隆，该以怎样的方式克隆
+
+引用计数类，retain 增加，release减少
+引用计数必须要大于0，当引用计数归0时，销毁该对象
+
+
+autorelease 结合GC来动态管理
+
+
+2..
+常用的设计模式
+
+Manager + Utils
+Manager 采用单例模式
+Utils 由工厂制造
+
+3..
+GC 的 AutoreleasePool 采用的就是2..中说的方式，
+
+PoolManager + AutoreleasePool，
+
+每个pool都可以有自己的名字（默认为""），在构造函数内，把自己压入poolmgr
+
+使用vector的使用。。使用reverse来用空间换取少量的时间
+
+
+
+
+
+
+
+

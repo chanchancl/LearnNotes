@@ -1,0 +1,9 @@
+
+1.
+from django.core.urlresolvers import reverse
+
+解析 named url
+reverse
+
+
+2.

@@ -38,7 +38,7 @@ Decorator to require that a view only accepts the GET and HEAD methods. These me
 3.Form
 
 django中，一个Form想要处理某一个数据项的时候，这个
-<input> 标记，必须要有  name 属性，否则数据并不会被 POST 解析。
+<input> 标记，必须要有  name 属性，否则数据并不会被 POST 接受。也就是说在request.POST 中没有该数据
 
 一旦你定义了一个Form如
 from django import forms
@@ -142,7 +142,8 @@ delete 信号没啥特殊的，顾名思义
     这些动作的响应，如上面的代码。。。这里还牵扯到 jQuery。。。心好累
     
 
-
+真麻烦啊。。一不小心把编码搞错了，结果一行一行中文从Github上复制下来。。
+Github有没有回滚功能啊。。。
 
 
 
