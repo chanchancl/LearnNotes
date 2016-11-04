@@ -10,8 +10,10 @@
         property: value
     }
 
-
-    h1 {color:red; font-size:14px;}
+    h1 {
+        color:red;
+         font-size:14px;
+    }
 
 ### 2.派生选择器
     li strong {
@@ -21,7 +23,9 @@
     
 li 中的 strong 标签
 
-    <p><strong>我是粗体字，不是斜体字，因为我不在列表当中，所以这个规则对我不起作用</strong></p>
+    <p>
+        <strong>我是粗体字，不是斜体字，因为我不在列表当中，所以这个规则对我不起作用</strong>
+    </p>
     
     <ol>
         <li><strong>我是斜体字。这是因为 strong 元素位于 li 元素内。</strong></li>
@@ -37,11 +41,10 @@ li 中的 strong 标签
     <p id="red">这个段落是红色。</p>
     <p id="green">这个段落是绿色。</p>
 
-    #red p{
-    }
 
 基于id的 派生选择器
 
+    #red p{ }
 
 ### 4. 类选择器
 
@@ -51,12 +54,12 @@ li 中的 strong 标签
 
 
     <h1 class="center">
-    This heading will be center-aligned
+        This heading will be center-aligned
     </h1>
 
     <p class="center">
-    This paragraph will also be center-aligned.
-
+        This paragraph will also be center-aligned.
+    </p>
 
 基于类的派生选择器
 
@@ -89,11 +92,11 @@ li 中的 strong 标签
 ### 2.内部样式表
 
     <head>
-    <style type="text/css">
-    hr {color: sienna;}
-    p {margin-left: 20px;}
-    body {background-image: url("images/back40.gif");}
-    </style>
+        <style type="text/css">
+            hr {color: sienna;}
+            p {margin-left: 20px;}
+            body {background-image: url("images/back40.gif");}
+        </style>
     </head>
 
 ### 3.内联样式
@@ -101,7 +104,7 @@ li 中的 strong 标签
 要使用内联样式，你需要在相关的标签内使用样式（style）属性。Style 属性可以包含任何 CSS 属性。本例展示如何改变段落的颜色和左外边距：
     
     <p style="color: sienna; margin-left: 20px">
-    This is a paragraph
+        This is a paragraph
     </p>
 
 
@@ -126,14 +129,11 @@ li 中的 strong 标签
 
 #### (2)背景图像
 
-    body {
-        background-image: url(/i/eg_bg_04.gif);
-    }
+    body { background-image: url(/i/eg_bg_04.gif); }
 
 如果需要在页面上对背景图像进行平铺，可以使用 `background-repeat` 属性。
 
-    body
-    { 
+    body { 
       background-image: url(/i/eg_bg_03.gif);
       background-repeat: repeat-y;
     }
@@ -141,8 +141,7 @@ li 中的 strong 标签
 可以利用 background-position 属性改变图像在背景中的位置。
 在 body 元素中将一个背景图像居中放置：
 
-    body
-    { 
+    body { 
         background-image:url('/i/eg_bg_03.gif');
         background-repeat:no-repeat;
         background-position:center;
@@ -152,8 +151,7 @@ li 中的 strong 标签
 如果文档比较长，那么当文档向下滚动时，背景图像也会随之滚动。当文档滚动到超过图像的位置时，图像就会消失。
 您可以通过 `background-attachment` 属性防止这种滚动。通过这个属性，可以声明图像相对于可视区是固定的（fixed），因此不会受到滚动的影响：
 
-    body 
-    {
+    body {
         background-image:url(/i/eg_bg_02.gif);
         background-repeat:no-repeat;
         background-attachment:fixed
@@ -192,7 +190,7 @@ text-indent 可以使用所有长度单位，包括百分比值。
     p {text-indent: 20%;}
 
     <div>
-    <p>this is a paragragh</p>
+        <p>this is a paragragh</p>
     </div>
 
 继承
@@ -215,7 +213,7 @@ text-indent 属性可以继承，请考虑如下标记：
 `text-align` 是一个基本的属性，它会影响一个元素中的文本行互相之间的对齐方式。它的前 3 个值相当直接，不过第 4 个和第 5 个则略有些复杂。
 值 left、right 和 center 会导致元素中的文本分别左对齐、右对齐和居中。
 
-最后一个水平对齐属性是 justify。
+最后一个水平对齐属性是 `justify`。
 在两端对齐文本中，文本行的左右两端都放在父元素的内边界上。然后，调整单词和字母间的间隔，使各行的长度恰好相等。两端对齐文本在打印领域很常见。
 
 
@@ -229,11 +227,11 @@ word-spacing`属性接受一个正长度值或负长度值。如果提供一个�
     p.tight {word-spacing: -0.5em;}
 
     <p class="spread">
-    This is a paragraph. The spaces between words will be increased.
+        This is a paragraph. The spaces between words will be increased.
     </p>
 
     <p class="tight">
-    This is a paragraph. The spaces between words will be decreased.
+        This is a paragraph. The spaces between words will be decreased.
     </p>
 
 
