@@ -550,7 +550,10 @@ vertical-align 属性设置垂直对齐方式，比如顶部对齐、底部对�
 
 所以，我们可以这样设置边框的宽度：
 
-    p {border-style: solid; border-width: 5px;}
+    p { 
+        border-style: solid;
+         border-width: 5px;
+    }
     
 
 ## 四 CSS 定位
@@ -594,9 +597,9 @@ CSS 有三种基本的定位机制：
 如果将 top 设置为 20px，那么框将在原位置顶部下面 20 像素的地方。如果 left 设置为 30 像素，那么会在元素左边创建 30 像素的空间，也就是将元素向右移动。
 
     #box_relative {
-    position: relative;
-    left: 30px;
-    top: 20px;
+        position: relative;
+        left: 30px;
+        top: 20px;
     }
 
 
@@ -618,6 +621,27 @@ CSS `position` 属性
 * fixed
 元素框的表现类似于将 position 设置为 absolute，不过其包含块是视窗本身。
 提示：相对定位实际上被看作普通流定位模型的一部分，因为元素的位置相对于它在普通流中的位置。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -146,5 +146,36 @@ delete 信号没啥特殊的，顾名思义
 Github有没有回滚功能啊。。。
 
 
+# importlib.import_module  可以加载字符串形式的库
+如  
+a = 'sys'
+sys = importlib.import_module(a)
+
+而
+a = 'sys'
+import a
+会触发异常
+
+
+django settings 加载的方式
+
+由django有主要的两种启动方式，一种是在本机上测试用的测试服务器，另一种是部署时用的wsgi服务器。
+测试服务器使用 $manage.py runserver 命令打开, wsgi则由支持wsgi协议的客户端来调用django工程下的 wsgi.py.
+
+这两个脚本都会设置  DJANGO_SETTINGS_MODULE 这个环境变量，表示settings所在的module，如果没有设置则使用默认的global_settings
+
+settings本身是一个 继承于LazyObject的LazySettings，重载了 __getattr__ 方法，当获取属性时，先检测是否已调用过 _setup，该函数负责查看DJANGO_SETTINGS_MODULE 所指定的 module 是否存在，然后用 Settings 类包裹
+
+在 Settings 类中，先把 global_settings 中所有标识符全为大写的属性设置为自身属性，接着import该module，
+下面用module中的ALL_CAP 属性覆盖自身的属性，并检测 "INSTALLED_APPS","TEMPLATE_DIRS", "LOCALE_PATHS" 是不是列表，SECRET_KEY 是否存在
+
+大概就是这样。
+
+
+
+
+
+
+
 
 
