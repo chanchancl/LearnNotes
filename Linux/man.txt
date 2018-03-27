@@ -1,0 +1,18 @@
+
+
+man -f 指令
+获得指令的所有说明
+
+man -k str
+获得简介中含有str的page
+
+
+man page 内
+
+q 退出， h帮助
+
+/str 向下查找str
+?str 向上查找str
+n 下一个查找内容， N上一个查找内容(和上面的查找顺序有关)
+
+man page 的数据存储在 /usr/share/man

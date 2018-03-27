@@ -1,0 +1,56 @@
+
+
+1.cd
+cd == cd ~ 回到家目录
+
+cd 绝对路径
+cd 相对路径
+
+cd - 回到上个路径
+
+2.pwd
+打印当前目录
+
+pwd -P resolve所有连接
+
+3.mkdir
+
+mkdir 目录
+创建目录
+
+mkdir -mp 目录名
+-m 初始权限
+-p 可以创建多级目录
+
+4.ls
+
+常用的
+ls -l
+ls -lh 
+
+ls -aAdfFhilnrRSt
+-a 全部档案，包括隐藏文档
+-A 全部档案，包括隐藏文档，但不包括 . 和 ..
+-d 仅列出目录本身
+-f 直接列出结果，不排序（默认文件名排序）
+-F 在文件名后标出文件类型
+    * 可执行
+    / 目录名
+    = socket
+    | FIFO
+-h 容量以人类容易读的形式给出
+-i 列出inode
+-l 长数据，横行输出
+-n 列出UID与GID
+-r 排序结果反向
+-R 递归输出所有子目录
+-S 按容量大小排列
+-t 依时间排列
+
+--color =   never   不使用颜色分类
+            always  一直使用
+            auto    由系统决定
+--full-time 以完整的时间模式输出
+--time=atime 输出access时间
+       ctime 输出权限改变时间
+             默认为文件内容变更时间

@@ -1,0 +1,23 @@
+
+cat  从第一行开始显示文件内容
+tac  从最后一行倒着显示内容
+nl   带行号输出
+more 一页一页输出
+less 一页一页输出，可以翻页
+head 头几行
+tail 尾部几行
+od   二进制
+
+
+新建文件
+touch
+
+文件时间
+modification time (mtime)
+status time (ctime)
+access time (atime)
+
+
+file命令
+
+猜测文件类型
