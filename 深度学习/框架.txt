@@ -1,9 +1,0 @@
-
-TensorFlow
-https://github.com/tensorflow/tensorflow
-
-mxnet
-https://github.com/dmlc/mxnet
-
-cnn
-https://github.com/clab/cnn
