@@ -1,0 +1,20 @@
+
+bash 下
+创建终端        screen [-S name]
+
+列出运行的终端  screen -ls
+
+恢复指定的终端  screen -r [name]
+
+
+终端中：
+
+Ctrl+a c 创建新终端
+Ctrl+a w 窗口列表
+Ctrl+a n 下一个窗口
+Ctrl+a p 上一个窗口
+Ctrl+a 0-9 在第0个到底9个窗口之间切换
+Ctrl+a K(大写) 关闭当前窗口，并切换到下一个窗口
+exit 关闭当前窗口
+Ctrl+a d 临时退出当前终端
+

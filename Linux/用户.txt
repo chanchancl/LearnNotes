@@ -1,0 +1,16 @@
+
+
+1.
+查看用户        cat /etc/passwd
+查找指定用户    cat /etc/passwd | grep 用户名
+格式
+用户名：密码：用户id：用户组id：备注：家目录：shell命令目录
+
+
+2.
+
+查看用户组  cat /etc/group
+查看指定用户组  cat /etc/group | grep 用户组名
+
+格式
+用户组：用户组口令：UID 及该用户组所包含的用户
