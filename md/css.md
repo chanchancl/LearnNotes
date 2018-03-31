@@ -540,7 +540,7 @@ vertical-align 属性设置垂直对齐方式，比如顶部对齐、底部对�
 
 <div> 标签
 
-![233](div.png)
+![div_pic](../src/div.png)
 
 设置 `margin` `padding` 两个主要属性和  `width` `height`。
 
