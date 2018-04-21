@@ -35,3 +35,27 @@ x|y		匹配 x 或者 y, (z|f)ood 匹配 zood、food
 \s		空白字符(空格、支付表、换页符[\f\n\r\t\v])
 \t		制表符
 
+
+// 捕获
+(exp)   	 捕获exp，并添加到自动命名的组
+(?<name>exp) 捕获exp，并添加到名为name的组
+(?:exp)		 匹配exp，不捕获文本
+
+// 零宽断言
+(?=exp) 	 匹配exp前面的位置      	a(?=abc),  可以匹配  aabc 中的 a
+(?<=exp)	 匹配exp后面的位置     		(?<=abc)c 可以匹配  abcc 中的 c
+(?!exp)		 匹配后面不是exp的位置 		(?!abc) 可以匹配 abcd 中的  a,b,c,d 这几个字符的后面
+(?<!exp)	 匹配前面不是exp的位置      (?<!abc) 可以匹配 abcd 中 a,b,d 这几个字符的前面，不匹配c的前面
+
+
+
+
+
+
+
+
+
+
+
+
+
