@@ -1,0 +1,21 @@
+
+一个模块可以通过
+logging.getlogger( loggername)
+来获取一个名为 loggername的 日志处理器
+并同时会创建一个名为 'root' 的根日志处理器, 
+
+若 loggername == '' || loggername == 'root'，则直接返回根处理器
+
+所有的日志处理器会形成一个树状结构，其中 'root' 为根节点
+
+
+一个处理器可以绑定一个或多个 Handler
+表明收到日志后，该将日志输出到哪里
+
+同时，一个logger 可以为其设置一个 Formatter，可以用来指定消息的输出格式
+
+当logger收到日志时，只有当 日志等级 >= logger的日志等级 >= Handler的日志登记
+这条消息才会被 传递给 Formatter进行格式化，然后再传递给 Handler将其发送到正确的地方
+
+
+
