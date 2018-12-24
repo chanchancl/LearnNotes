@@ -313,15 +313,15 @@ self.environ就是 setup_environ准备的environ， start_response是一个方�
    `set_script_prefix(get_script_name(environ))`
    `signals.request_started.send(sender=self.__class__, environ=environ)`
    
-3.  request = self.request_class(environ)
-    流程转移到 WSGIRequest   PS: self.request_class == WSGIRequest
+3.request = self.request_class(environ)
+   流程转移到 WSGIRequest   PS: self.request_class == WSGIRequest
     
-4.  纠正一下，流程并没有转移，WSGIRequest目前在这里只划了一下水。。。
-    主流程接下来才要转移，并转移到 继承自 BaseHandler的get_response
+4.纠正一下，流程并没有转移，WSGIRequest目前在这里只划了一下水。。。
+   主流程接下来才要转移，并转移到 继承自 BaseHandler的get_response
 
 ServerHandler.Run 先告一段落，等 get_response弄懂后，再继续。
 
-##6. WSGIHandler.get_response  (实际上是从BaseHandler继承来的 233)
+## 6. WSGIHandler.get_response  (实际上是从BaseHandler继承来的 233)
 ```
 一路前行，终于来到了这里。
 这一部分，就是django内部对 http请求的实际响应动作。
@@ -420,7 +420,7 @@ django中，有一个 middleware 的概念，类似于一个个用于完成特�
 ## 7. 收尾
 ```
     。。。恍然大悟，上面所讲的request，就是传给 用户自定义 view函数的 request，里面包含了http请求的各种信息，
-    与对 db的访问权限，是当做一个借口给用户使用的。
+    与对 db的访问权限，是当做一个接口给用户使用的。
     
     流程回到 __call__中，get_response 完成了对response的响应，接下来补充了一些其他信息
         response 返回状态 status
