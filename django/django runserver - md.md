@@ -1,5 +1,5 @@
  
-manage.py runserver 命令的深入与浅出
+# manage.py runserver 命令的深入与浅出
 
 概述。。。本来只是想给django的开发服务器加一个log功能，结果越写越长。。直接把http响应全看完了。。
 
@@ -7,9 +7,9 @@ manage.py runserver 命令的深入与浅出
 
 基本上把python网络库搞完了
 
-github地址:https://github.com/chanchancl/Learn-Django/blob/master/django%20runserver.txt
+github地址:https://github.com/chanchancl/LearnNotes/blob/master/django/django%20runserver.txt
 
-1.manage.py runserver的流程
+## 1.manage.py runserver的流程
 
 大致流程：会被 django\core\management 的 __init__.py接收，经过commands解析后，传递给django\core\management\runserver.py，在这里运行服务器
 
@@ -39,7 +39,18 @@ BaseRunserverCommand(BaseCommand)
 
 在BaseRunserverCommand内，主要改写了add_arguments 和 handl方法，并添加了几个辅助方法如 run  inner_run  get_handler  check_migrations
 一个BaseCommand的子类，从handle方法开始运行。
-在handle内，对 addr  addrport 和 是否使用ipv6进行了检查，确保参数正确，然后调用self.run, run根据 use_reloader 参数决定是否用新的shell来运行 inner_run， inner_run 先获得 quit的快捷键，当前时间，然后检查web的正确性，并在stdout输出必要的信息，然后用 get_handler ，后者根据getattr(settings, 'WSGI_APPLICATION') 来决定从哪里获得 handle，默认应该是 WSGI Handler.  回到inner_run ，获得handler后，把前面获得的参数和handler传递给basehttp中的run函数运行服务器。服务器退出后，运行exit退出python
+
+在handle内，对 addr  addrport 和 是否使用ipv6进行了检查，确保参数正确，然后调用self.run, run
+
+根据 use_reloader 参数决定是否用新的shell来运行 inner_run， 
+
+inner_run 先获得 quit的快捷键，当前时间，然后检查web的正确性，并在stdout输出必要的信息，
+
+然后用 get_handler ，后者根据getattr(settings, 'WSGI_APPLICATION') 来决定从哪里获得 handle，默认应该是 WSGI Handler.  
+
+回到inner_run ，获得handler后，把前面获得的参数和handler传递给basehttp中的run函数运行服务器。
+
+服务器退出后，运行exit退出python
 
 整个流程如下
 ~~~
@@ -71,7 +82,7 @@ djangp\core\wsgi.py
 
 `//******************************滑稽的分割线********************************`
 
-2.深入 basehttp.run
+## 2.深入 basehttp.run
 
 在此之前先理一下类的继承关系
 
@@ -95,6 +106,7 @@ wsgiref.handlers.BaseHandler
 ~~~
 
 上面的这三个类，django可以说是照搬 python的。。基本没啥变化
+
 下面这两个类可以说是django把HTTP请求转入自己地盘的类。
 
 ~~~
@@ -107,14 +119,16 @@ django.http.HttpRequest
 
 PS: 这个顺序，差不多就是 django，开发服务器处理 http请求的顺序
 
-
 在basehttp的run函数中若 threading为真则运行 tmpWSGIServer(socketserver.ThreadingMixIn, django.core.servers.basehttp.WSGIServer)
+
 Server的init参数为 server_address  WSGIRequestHandler 和 ipv6,ipv6在django.core.servers.basehttp.WSGIServer就被处理了，而前面两个一直传到
 socketserver.BaseServer才被处理分别作为 server_address 和 RequestHandlerClass属性的值
+
 即 Server.RequestHandlerClass = WSGIRequestHandler.
 
 
 初始化结束后，django.core.handlers.wsgi.WSGIRequest的一个实例 作为 app被传给 server.
+
 即 WSGIServer.application = WSGIRequest()
 
 同时，在初始化过程中，基类TCPServer会调用 server_bind 和 server_activate 来对套接字进行绑定
@@ -125,22 +139,26 @@ socketserver.BaseServer才被处理分别作为 server_address 和 RequestHandle
 
 `//******************************滑稽的分割线********************************`
 
-3.由Server.serve_forever 构成的 服务器请求处理循环
+## 3.由Server.serve_forever 构成的 服务器请求处理循环
 
 django.core.servers.basehttp.WSGIServer 这一小节内简称为WSGIServer
 
 WSGIServer.serve_forever() 继承自socketserver.BaseServer.
 
 在serve_forever内用一个循环和一个 Event来进行线程同步。
-while __shutdown_request: 
+
+`while __shutdown_request: `
 
 然后在循环内用了称之为 selector 的东西，来进行异步处理
 
 selector的作用就是，可以同时处理多个socket。selector先 register要检测的套接字和事件，
+
 然后进行循环，然后用 selector.select 并传入一个timeout值，在timeout时间内，如果socket 可写入/读出，则立刻返回可写入/读取的套接字
+
 然后 可以直接使用 socket的accept来建立TCP连接
 
 接着，如果select在 timeout时间内，没有检测到套接字的状态发生变化，则在函数运行后的timeout s退出并返回 空tuple。
+
 回到servve_forever，如果有socket的状态发生改变，则说明有新的连接请求，接下来进行连接的建立与处理，主要由下面几个函数完成
 
 调用关系大致如下  （图3.1）
@@ -167,12 +185,13 @@ def finish_request(self, request, client_address):
 在这里立一个 flag1 ，继续serve_forever,RequestHandlerClass 对 request的处理暂且放下。
 
 在serve_forever内，每个select循环不管是否有连接产生，都会固定运行一个函数 service_actions
+
 子类可以重载这个函数，来执行一些 固定的动作。
 
 
 `//******************************滑稽的分割线********************************`
 
-4.在 RequestHandlerClass 内对request的处理。
+## 4.在 RequestHandlerClass 内对request的处理。
 
 flag1立得毫无意义
 
@@ -188,11 +207,15 @@ flag1立得毫无意义
 handle 和 finish 这两个方法，是基类BaseRequestHandler 定义的空函数，由子类重载实现其具体功能
 
 handle内。。(讲道理是 WSGIRequestHandler.handle)
+
 1.先对过长的连接(第一行)进行处理  
-2. 调用 parse_request   
+2.调用 parse_request   
 3.调用 ServerHandler  额。是django.core.servers.basehttp.ServerHandler
+
 同时，Server有一个 base_environ，保存了一些服务端的基本信息，然后在此基础上
+
 每个 WSGIRequestHandler 都有一个属于自己的 environ，用来保存在处理过程中需要存储的信息。
+
 一个请求示例:
 ~~~
 GET /index/ HTTP/1.1
@@ -204,25 +227,33 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like
 Accept-Encoding: gzip, deflate, sdch
 Accept-Language: zh-CN,zh;q=0.8
 ~~~
+
 请求的第一行格式一般为  <method> <path> <version>   HTTP/1.0 及以上
+ 
 HTTP/0.9  只有 <method> <path>
+ 
 parse_request 来自 BaseHTTPRequestHandler，parse_request 对客户端通过连接发来的请求进行解析，解析主要分为
-1.确定HTTP/ 版本，
+
+1.确定HTTP/ 版本
 2.分析 headers（上面的示例，除了第一行，剩下的都是headers）
 3.根据 HTTP/ 版本 和 headers.Connection 是不是 keep-alive 来确定是否关闭连接 
 
 
 如果前面的解析没有问题，接下来就交给 ServerHandler 了。。。。。django.core.servers.basehttp.ServerHandler
+
 创建一个ServerHandler，把 self.rfile, self.wfile, self.get_stderr(), self.get_environ() 都传进去，构造函数保存参数到self
+
 然后 ServerHandler.request_handler=self  (WSGIRequestHandler)  用于回调
+
 之后 ServerHandler.Run(self.server.get_app())  即 WSGIHandler
 
 
 `//******************************滑稽的分割线********************************`
 
-5.ServerHandler.Run
+## 5.ServerHandler.Run
 
 在Run内，先 setup_environ,
+
 在 一个ServerHandler内，有两个environ 分别是 从WSGIRequestHandler得来的，命名为 base_environ，另一个是。。。有点乱。
 
 说一下 environ 的生成与传递路线。。。。
@@ -275,20 +306,23 @@ self.environ就是 setup_environ准备的environ， start_response是一个方�
 注意，application是一个 实例，并不是一个类型，他重载了 __call__ 方法，所以可以被调用
 
 在application的__call__方法中。
+
 1.加载 middle_sofeware (django的app)
-2. 下面这两条语句不知道具体做了什么工作
-       `set_script_prefix(get_script_name(environ))`
-       `signals.request_started.send(sender=self.__class__, environ=environ)`
-    
+
+2.下面这两条语句不知道具体做了什么工作
+   `set_script_prefix(get_script_name(environ))`
+   `signals.request_started.send(sender=self.__class__, environ=environ)`
+   
 3.  request = self.request_class(environ)
     流程转移到 WSGIRequest   PS: self.request_class == WSGIRequest
+    
 4.  纠正一下，流程并没有转移，WSGIRequest目前在这里只划了一下水。。。
     主流程接下来才要转移，并转移到 继承自 BaseHandler的get_response
 
 ServerHandler.Run 先告一段落，等 get_response弄懂后，再继续。
 
+##6. WSGIHandler.get_response  (实际上是从BaseHandler继承来的 233)
 ```
-6. WSGIHandler.get_response  (实际上是从BaseHandler继承来的 233)
 一路前行，终于来到了这里。
 这一部分，就是django内部对 http请求的实际响应动作。
 
@@ -383,7 +417,7 @@ django中，有一个 middleware 的概念，类似于一个个用于完成特�
     返回 rensponse
 ```
     
-7. 收尾
+## 7. 收尾
 ```
     。。。恍然大悟，上面所讲的request，就是传给 用户自定义 view函数的 request，里面包含了http请求的各种信息，
     与对 db的访问权限，是当做一个借口给用户使用的。
